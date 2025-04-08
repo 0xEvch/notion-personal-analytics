@@ -1,4 +1,4 @@
-from models.autopilot import Autopilot
+from core.models.autopilot import Autopilot
 import json
 
 class JsonParser:
