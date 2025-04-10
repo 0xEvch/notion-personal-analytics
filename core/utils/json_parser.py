@@ -7,8 +7,7 @@ class JsonParser:
     def parse_notion_data(data) -> List[Autopilot]:
         autopilot_objects = []
 
-        properties = data.get("results", [])
-        for item in properties:
+        for item in data:
             autopilot = Autopilot(
                 name = JsonParser._parse_title(item),
                 activity_type = JsonParser._parse_activity_type(item),

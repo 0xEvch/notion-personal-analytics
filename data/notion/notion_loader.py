@@ -8,7 +8,7 @@ class NotionLoader:
 
     def get_database(self):
         response = self._query_notion(autopilot)
-        # JsonParser.parse_notion_data(response)
+        JsonParser.parse_notion_data(response)
 
     def _query_notion(self, database_id):
         results = []
