@@ -8,7 +8,11 @@ class NotionLoader:
 
     def get_database(self):
         response = self._query_notion(autopilot)
-        JsonParser.parse_notion_data(response)
+        return JsonParser.parse_notion_data(response)
+
+    def sync_query(self, database_id=autopilot):
+        response = self.client.databases.query(database_id)
+        return response["results"][0]["id"]
 
     def _query_notion(self, database_id):
         results = []
@@ -33,4 +37,5 @@ class NotionLoader:
     
 if __name__ == "__main__":
     loader = NotionLoader(token)
-    loader.get_database()
+    print(loader.get_database())
+    print(loader.sync_query())
