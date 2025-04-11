@@ -17,6 +17,8 @@ class JsonParser:
                 notes = JsonParser._parse_notes(item),
             )
             autopilot_objects.append(autopilot)
+        
+        return autopilot_objects
 
     @staticmethod
     def _parse_title(properties) -> str:
