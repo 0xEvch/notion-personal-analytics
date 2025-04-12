@@ -44,8 +44,6 @@ class JsonParser:
     @staticmethod
     def _parse_notes(properties) -> str:
         try:
-            rich_text = properties["properties"]["Notes"]["rich_text"]
-            if rich_text:
-                return rich_text["plain_text"]
-        except:
+            return properties["properties"]["Notes"]["rich_text"][0]["plain_text"]
+        except Exception as e:
             return None
