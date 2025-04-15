@@ -1,15 +1,11 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-from data.notion.sync_manager import SyncManager
-from core.utils.pandas_parser import PandasParser
 
 class Summary(ABC):
-    def __init__(self):
-        data = SyncManager.get_autopilot_data()
-        self.df = PandasParser.get_autopilot_dataframe(data)
+    def __init__(self, data):
+        self.df = data
 
-
-    def get_statistics(self, months_back):
+    def get_statistics(self, months_back: int):
         summaries = []
         for offset in range(months_back):
             month, year = self._get_month_by_offset(offset)
@@ -17,7 +13,7 @@ class Summary(ABC):
             summaries.append(summary)
         return summaries
 
-    def _get_month_by_offset(self, offset):
+    def _get_month_by_offset(self, offset: int):
         month = datetime.now().month - offset
         year = datetime.now().year
         if month <= 0:
