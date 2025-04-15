@@ -1,29 +1,22 @@
-from typing import List
-from core.models.autopilot import Autopilot
 from data.notion.notion_loader import NotionLoader
+from core.utils.base_json_parser import JsonParser
 from data.notion.cache import Cache
-from config import token
 
 class SyncManager:
-    _cached_autopilot_objects = []
+    def __init__(self, loader: NotionLoader, parser: JsonParser, cache: Cache):
+        self.loader = loader
+        self.parser = parser
+        self.cache = cache
 
-    @staticmethod
-    def get_autopilot_data() -> List[Autopilot]:
-        global _cached_autopilot_objects
-
-        loader = NotionLoader(token)
-        actual_id = loader.sync_query()
+    def get_data(self):
+        actual_id = self.loader.sync_query()
         
-        if Cache.is_synced(actual_id):
-            print("load from file")
-            _cached_autopilot_objects = Cache.load_cache()
+        if self.cache.is_synced(actual_id):
+            return self.cache.load_cache()
         else:
-            print("load from API")
-            _cached_autopilot_objects = loader.get_database()
-            Cache.save_cache(_cached_autopilot_objects)
-            Cache.save_sync_info(actual_id)
-
-        return _cached_autopilot_objects
-    
-if __name__ == "__main__":
-    SyncManager.get_autopilot_data()
+            raw_data = self.loader.get_database()
+            data = self.parser.parse_notion_data(raw_data)
+            self.cache.save_cache(data)
+            self.cache.save_sync_info(actual_id)
+            print(data)
+            return data
