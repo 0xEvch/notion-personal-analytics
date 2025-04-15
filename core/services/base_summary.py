@@ -11,7 +11,7 @@ class Summary(ABC):
 
     def get_statistics(self, months_back):
         summaries = []
-        for offset in range(1, months_back + 1):
+        for offset in range(months_back):
             month, year = self._get_month_by_offset(offset)
             summary = self._get_month_summary(month, year)
             summaries.append(summary)
