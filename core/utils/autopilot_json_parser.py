@@ -1,23 +1,22 @@
 from core.models.autopilot import Autopilot
+from core.utils.base_json_parser import JsonParser
 from datetime import date
 from typing import List
 
-class JsonParser:
-    @staticmethod
-    def parse_notion_data(data) -> List[Autopilot]:
+class AutopilotJsonParser(JsonParser):
+    def parse_notion_data(self, data) -> List[Autopilot]:
         autopilot_objects = []
 
         for item in data:
             autopilot = Autopilot(
-                name = JsonParser._parse_title(item),
-                activity_type = JsonParser._parse_activity_type(item),
-                date = JsonParser._parse_date(item), 
-                duration_min = JsonParser._parse_duration_min(item),
-                duration_hrs = JsonParser._parse_duration_hrs(item),
-                notes = JsonParser._parse_notes(item),
+                name = self._parse_title(item),
+                activity_type = self._parse_activity_type(item),
+                date = self._parse_date(item), 
+                duration_min = self._parse_duration_min(item),
+                duration_hrs = self._parse_duration_hrs(item),
+                notes = self._parse_notes(item),
             )
             autopilot_objects.append(autopilot)
-        
         return autopilot_objects
 
     @staticmethod
@@ -38,7 +37,7 @@ class JsonParser:
         return properties["properties"]["Time (min)"]["number"]
     
     @staticmethod
-    def _parse_duration_hrs(properties) -> str:
+    def _parse_duration_hrs(properties) -> float:
         return properties["properties"]["Hrs"]["formula"]["number"]
     
     @staticmethod
