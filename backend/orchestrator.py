@@ -4,7 +4,9 @@ from data.notion.cache import Cache
 from data.notion.sync_manager import SyncManager
 from core.utils.pandas_parser import PandasParser
 from core.services.activity_summary import ActivitySummary
-from config import *
+from core.views.charts_view import Histogram
+from core.views.table_view import Tables
+from backend.config import *
 
 class Orchestrator:
     def run_analytics(self, months_back):
@@ -18,7 +20,12 @@ class Orchestrator:
         dataframe = pandas_parser.get_dataframe(data)
         summary = ActivitySummary(dataframe)
         analytics = summary.get_statistics(months_back)
-        print(analytics)
+
+        # histogram = Histogram()
+        # histogram.create_chart(analytics)
+
+        table = Tables()
+        table.create_hours_table(analytics)
 
 if __name__ == "__main__":
     orchestrator = Orchestrator()
