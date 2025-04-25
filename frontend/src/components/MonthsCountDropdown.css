@@ -1,0 +1,30 @@
+.dropdown {
+    position: relative;
+    width: 120px;
+    margin-right: 20px; 
+    margin-top: 20px;  
+    float: right;
+}
+
+.dropdown button {
+    width: 100%;
+    box-sizing: border-box; 
+}
+
+.dropdown-content {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: white;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; 
+    padding: 5px;
+}
+
+.dropdown-content button {
+    text-align: left;
+}
