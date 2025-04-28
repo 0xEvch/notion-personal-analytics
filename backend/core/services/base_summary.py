@@ -3,14 +3,11 @@ from datetime import datetime
 import pandas as pd
 
 class Summary(ABC):
-    def __init__(self, data):
-        self.df = data
-
-    def get_statistics(self, months_back: int):
+    def get_statistics(self, data, months_back: int):
         summaries = []
         for offset in range(months_back):
             month, year = self._get_month_by_offset(offset)
-            summary = self._get_month_summary(month, year)
+            summary = self._get_month_summary(data, month, year)
             summary = self._add_month(summary, month)
             summaries.append(summary)
         return pd.concat(summaries, ignore_index=True)
@@ -29,5 +26,5 @@ class Summary(ABC):
         return df
     
     @abstractmethod
-    def _get_month_summary(self, month: int, year: int):
+    def _get_month_summary(self, data, month: int, year: int):
         pass

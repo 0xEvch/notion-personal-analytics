@@ -2,8 +2,8 @@ import pandas as pd
 from core.services.base_summary import Summary
 
 class ActivitySummary(Summary):
-    def _get_month_summary(self, month, year):
-        month_filter = self.df[(self.df['date'].dt.month == month) & (self.df['date'].dt.year == year)]
+    def _get_month_summary(self, data, month, year):
+        month_filter = data[(data['date'].dt.month == month) & (data['date'].dt.year == year)]
         month_summary = month_filter.groupby("activity_type", as_index=False).agg({
             'duration_hrs': 'sum',
             'duration_min': 'sum',
