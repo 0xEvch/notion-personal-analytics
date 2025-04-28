@@ -8,12 +8,13 @@ from core.views.charts_view import Histogram
 from config import *
 
 class AnalyzerCore():
-    def __init__(self, table):    
+    def __init__(self, table):   
+        self._setup_mappings()
+
         if table not in self.data_providers:
             raise ValueError(f"Unknown data type: {table}")
         self.table = table
-
-        self._setup_mappings()        
+    
         self._initialize_components()
 
     def run_analytics(self, months_back):
