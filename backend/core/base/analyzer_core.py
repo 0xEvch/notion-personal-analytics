@@ -21,7 +21,7 @@ class AnalyzerCore():
         raw_data = self.sync_manager.get_data()
         data = self.pandas_parser.get_dataframe(raw_data)
         summary = self.analyzer.get_statistics(data, months_back)
-        chart = self.view.create_chart(summary)
+        chart = self.view.get_chart(summary)
 
         print(summary)
 
