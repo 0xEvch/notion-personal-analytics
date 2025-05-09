@@ -4,7 +4,7 @@ import mplcursors
 import base64
 import io
 
-class Histogram:
+class ChartView:
     def __init__(self):
         self.month_order = ["January", "February", "March", "April", "May", "June", "August", "September", "October", "November", "December"]
         self.figsize = (12, 6)
@@ -43,6 +43,8 @@ class Histogram:
         plt.xticks(rotation=45, ha='right')
         plt.legend(title='Month', fontsize=10)
         plt.tight_layout()
+        ax.grid(axis='y', linestyle='--', alpha=0.5)
+        ax.grid(axis='x', linestyle='--', alpha=0.3)
 
     def _save_to_base64(self):
         buffer = io.BytesIO()
