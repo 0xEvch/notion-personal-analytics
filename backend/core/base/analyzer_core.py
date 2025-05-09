@@ -20,7 +20,7 @@ class AnalyzerCore():
     def run_analytics(self, months_back):
         raw_data = self.sync_manager.get_data()
         data = self.pandas_parser.get_dataframe(raw_data)
-        summary = self.analyzer.get_statistics(data, months_back)
+        summary = self.analyzer.get_statistics_for_n_months_bar_chart(data, months_back)
         chart = self.view.get_chart(summary)
 
         print(summary)
