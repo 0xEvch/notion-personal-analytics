@@ -4,37 +4,21 @@ import mplcursors
 import base64
 import io
 
-class ChartView:
+class BaseChartView:
     def __init__(self):
-        self.month_order = ["January", "February", "March", "April", "May", "June", "August", "September", "October", "November", "December"]
         self.figsize = (12, 6)
         self.colors = sns.color_palette("pastel")
-
-    def get_chart(self, summary):
-        self._create_chart(summary)
-        img = self._save_to_base64
-        return img
     
-    def _create_chart(self, summary):
-        pivot_data = self._prepare_data(summary)
-        
+    def _create_bar_chart(self, summary):
         fig, ax = plt.subplots(figsize=self.figsize)
-        pivot_data.plot(
+        summary.plot(
             kind='bar',
             ax=ax,
-            color=self.colors[:len(pivot_data.columns)],
+            color=self.colors[:len(summary.columns)],
             alpha=0.8
         )
 
         self._configure_plot(ax)
-    
-    def _prepare_data(self, summary):
-        pivot_data = summary.pivot(
-            index='Activity Type', 
-            columns='Month', 
-            values='Total Time'
-        ).fillna(0)
-        return pivot_data[[col for col in self.month_order if col in pivot_data.columns]]
     
     def _configure_plot(self, ax):
         plt.title('Total Time Comparison by Activity Type', fontsize=14, pad=15)
@@ -54,16 +38,16 @@ class ChartView:
         plt.close()
         return img_base64
     
-    def _add_interactive_cursor(self, ax):
-        cursor = mplcursors.cursor(ax, hover=True)
+    # def _add_interactive_cursor(self, ax):
+    #     cursor = mplcursors.cursor(ax, hover=True)
         
-        @cursor.connect("add")
-        def on_add(sel):
-            index = sel.index
-            bar = sel.artist[index]
-            value = bar.get_height()
-            sel.annotation.set_text(f'{value:.2f} hours')
-            sel.annotation.get_bbox_patch().set(fc="white", alpha=0.9)
+    #     @cursor.connect("add")
+    #     def on_add(sel):
+    #         index = sel.index
+    #         bar = sel.artist[index]
+    #         value = bar.get_height()
+    #         sel.annotation.set_text(f'{value:.2f} hours')
+    #         sel.annotation.get_bbox_patch().set(fc="white", alpha=0.9)
 
     # def show_chart(self, ax):
     #     self._add_interactive_cursor(ax)
