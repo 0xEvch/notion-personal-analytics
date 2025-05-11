@@ -6,6 +6,14 @@ class Summary(ABC):
     def get_json(self, df: pd.DataFrame) -> str:
         return df.to_json(orient="records", lines=True)
     
+    def _pivot_data(self, data, values, columns):
+        return data.pivot_table(
+            index = data.index,
+            values = values,
+            columns = columns,
+            fill_value = 0
+        )
+    
     def _get_month_by_offset(self, offset: int):
         month = datetime.now().month - offset
         year = datetime.now().year
