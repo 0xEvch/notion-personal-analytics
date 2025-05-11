@@ -54,11 +54,13 @@ class ActivitySummary(Summary):
             'duration_hrs': 'sum',
             'date': 'nunique'
         }).rename(columns={
-            'activity_type': 'Activity Type' ,
             'duration_min': 'Total Time (min)', 
             'duration_hrs': 'Total Time',
             'date': 'Unique Days'
             })
+        
+        month_summary.index.name = 'Activity Type'
+        
         return month_summary
 
 if __name__ == "__main__":
