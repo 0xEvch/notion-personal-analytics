@@ -4,10 +4,12 @@ from core.services.base_summary import Summary
 class ActivitySummary(Summary):    
     def get_total_time_table_view_by_type(self, data, months_back):
         result = self._get_raw_summary_for_n_months(data, months_back)
+        result = self._get_correct_month_order(result)
         return self._pivot_data(result, "Total Time", "Month")
     
     def get_unique_days_table_view_by_type(self, data, months_back):
         result = self._get_raw_summary_for_n_months(data, months_back)
+        result = self._get_correct_month_order(result)
         return self._pivot_data(result, "Unique Days", "Month").astype('Int64')
     
     def get_total_time_for_month(self, data, months_back):
