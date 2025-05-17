@@ -1,8 +1,7 @@
-from abc import ABC, abstractmethod
 from datetime import datetime
 import pandas as pd
 
-class Summary(ABC):
+class Summary():
     def get_json(self, df: pd.DataFrame) -> str:
         return df.to_json(orient="records", lines=True)
     
