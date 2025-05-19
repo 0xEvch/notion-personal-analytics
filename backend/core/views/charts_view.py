@@ -6,27 +6,20 @@ import io
 
 class BaseChartView:
     def __init__(self):
-        self.figsize = (12, 6)
         self.colors = sns.color_palette("pastel")
     
-    def _create_bar_chart(self, summary):
-        fig, ax = plt.subplots(figsize=self.figsize)
+    def _create_barchart(self, summary, figsize):
+        fig, ax = plt.subplots(figsize=figsize)
         summary.plot(
             kind='bar',
             ax=ax,
-            color=self.colors[:len(summary.columns)],
+            color=self.colors,
             alpha=0.8
         )
-
         self._configure_plot(ax)
     
     def _configure_plot(self, ax):
-        plt.title('Total Time Comparison by Activity Type', fontsize=14, pad=15)
-        plt.ylabel('Total Time (hours)', fontsize=12)
-        plt.xlabel('Activity Type', fontsize=12)
-        plt.xticks(rotation=45, ha='right')
-        plt.legend(title='Month', fontsize=10)
-        plt.tight_layout()
+        plt.xlabel(None)
         ax.grid(axis='y', linestyle='--', alpha=0.5)
         ax.grid(axis='x', linestyle='--', alpha=0.3)
 
