@@ -10,7 +10,8 @@ class Summary():
             index = data.index,
             values = values,
             columns = columns,
-            fill_value = 0
+            fill_value = 0,
+            observed=False
         )
     
     def _get_correct_month_order(self, data):
