@@ -2,6 +2,12 @@ from datetime import datetime
 import pandas as pd
 
 class Summary():
+    def __init__(self):
+        self.months_order = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ]
+
     def get_json(self, df: pd.DataFrame) -> str:
         return df.to_json(orient="records", lines=True)
     
@@ -15,13 +21,8 @@ class Summary():
         )
     
     def _get_correct_month_order(self, data):
-        all_months = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ]
-
         unique_months = data["Month"].unique()
-        ordered_months = [month for month in all_months if month in unique_months]
+        ordered_months = [month for month in self.months_order if month in unique_months]
 
         data["Month"] = pd.Categorical(data["Month"], categories=ordered_months, ordered=True)
 
@@ -36,8 +37,7 @@ class Summary():
         return month, year
     
     def _add_month_name(self, df, month):
-        months = ["January", "February", "March", "April", "May", "June", "August", "September", "October", "November", "December"]
-        df["Month"] = months[month - 1]
+        df["Month"] = self.months_order[month - 1]
         return df
     
     def _filter_by_month(self, df, month, year):
