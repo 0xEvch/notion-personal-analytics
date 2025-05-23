@@ -28,3 +28,25 @@ class ActivityChartView(BaseChartView):
 
         img = self._save_to_base64
         return img
+
+    def get_total_time_barchart(self, data):
+        figsize = (6, 6) 
+        self._create_barchart(data, figsize)
+
+        plt.title('Total Time comparison by Months', fontsize=12, pad=15)
+        plt.ylabel('Total Time (hours)', fontsize=12)     
+        plt.tight_layout()
+
+        img = self._save_to_base64
+        return img
+
+    def get_total_unique_days_barchart(self, data):
+        figsize = (6, 6) 
+        self._create_barchart(data, figsize)
+
+        plt.title('Unique Days comparison by Months', fontsize=12, pad=15)
+        plt.ylabel('Unique Days', fontsize=12)     
+        plt.tight_layout()
+
+        img = self._save_to_base64
+        return img
