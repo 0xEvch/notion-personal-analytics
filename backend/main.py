@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from core.api.router import router
+from backend.core.api.activities import activities
 
 app = FastAPI(
     title="Analytics API",
@@ -17,7 +17,7 @@ app.add_middleware(
 )
 
 # Подключаем роутер
-app.include_router(router)
+app.include_router(activities.router)
 
 if __name__ == "__main__":
     import uvicorn
