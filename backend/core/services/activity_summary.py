@@ -2,32 +2,32 @@ import pandas as pd
 from core.services.base_summary import Summary
 
 class ActivitySummary(Summary):    
-    def get_total_time_table_view_by_type(self, data, months_back):
-        result = self._get_raw_summary_for_n_months(data, months_back, "activity_type")
+    def get_activity_time_by_month(self, data, months_back):
+        result = self._collect_monthly_summaries(data, months_back, "activity_type")
         result = self._get_correct_month_order(result)
         return self._pivot_data(result, "Total Time", "Month")
     
-    def get_unique_days_table_view_by_type(self, data, months_back):
-        result = self._get_raw_summary_for_n_months(data, months_back, "activity_type")
+    def get_activity_unique_days_by_month(self, data, months_back):
+        result = self._collect_monthly_summaries(data, months_back, "activity_type")
         result = self._get_correct_month_order(result)
         return self._pivot_data(result, "Unique Days", "Month").astype('Int64')
     
-    def get_total_time_for_month(self, data, months_back):
-        result = self._get_raw_total_for_n_months(data, months_back, 'Total Time')
+    def get_total_time_by_month(self, data, months_back):
+        result = self._aggregate_metrics_by_month(data, months_back, 'Total Time')
         return result['Total Time']
 
-    def get_unique_days_for_month(self, data, months_back):
-        result = self._get_raw_total_for_n_months(data, months_back, 'Unique Days')
+    def get_total_unique_days_for_month(self, data, months_back):
+        result = self._aggregate_metrics_by_month(data, months_back, 'Unique Days')
         return result['Unique Days']
     
-    def _get_raw_total_for_n_months(self, data, months_back, column_to_sum):
-        data = self._get_raw_summary_for_n_months(data, months_back, "date")
+    def _aggregate_metrics_by_month(self, data, months_back, column_to_sum):
+        data = self._collect_monthly_summaries(data, months_back, "date")
         return data.groupby('Month').agg({
             column_to_sum: 'sum',
             'Order': 'first'
         }).sort_values(by='Order', ascending=False)
     
-    def _get_raw_summary_for_n_months(self, data, months_back: int, group_by: str):
+    def _collect_monthly_summaries(self, data, months_back: int, group_by: str):
         summaries = []
         for offset in range(months_back):
             month, year = self._get_month_by_offset(offset)
