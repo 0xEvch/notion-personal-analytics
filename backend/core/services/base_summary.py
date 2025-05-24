@@ -21,8 +21,8 @@ class Summary():
         )
     
     def _get_correct_month_order(self, data):
-        unique_months = data["Month"].unique()
-        ordered_months = [month for month in self.months_order if month in unique_months]
+        ordered_months = data["Month"].unique().tolist()
+        ordered_months.reverse()
 
         data["Month"] = pd.Categorical(data["Month"], categories=ordered_months, ordered=True)
 
