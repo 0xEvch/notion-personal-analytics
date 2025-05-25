@@ -1,38 +1,25 @@
-.App {
-  text-align: center;
+.app-container {
+  display: grid;
+  grid-template-columns: auto 1fr; /* Боковая панель + контент */
+  height: 100vh;
+  overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.sidebar {
+  background-color: #f0f0f0;
+  transition: width 0.3s ease;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.sidebar-closed {
+  width: 60px; /* Только иконки */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.sidebar-open {
+  width: 200px; /* Полная ширина с текстом */
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main-content {
+  padding: 20px;
+  overflow-y: auto;
 }
