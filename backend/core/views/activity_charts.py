@@ -13,7 +13,7 @@ class ActivityChartView(BaseChartView):
         plt.legend(title='Month', fontsize=10)      
         plt.tight_layout()
 
-        img = self._save_to_base64
+        img = self._save_to_base64()
         return img
     
     def get_unique_days_barchart(self, data):
@@ -26,7 +26,7 @@ class ActivityChartView(BaseChartView):
         plt.legend(title='Month', fontsize=10)      
         plt.tight_layout()
 
-        img = self._save_to_base64
+        img = self._save_to_base64()
         return img
 
     def get_total_time_barchart(self, data):
@@ -37,7 +37,7 @@ class ActivityChartView(BaseChartView):
         plt.ylabel('Total Time (hours)', fontsize=12)     
         plt.tight_layout()
 
-        img = self._save_to_base64
+        img = self._save_to_base64()
         return img
 
     def get_total_unique_days_barchart(self, data):
@@ -48,5 +48,5 @@ class ActivityChartView(BaseChartView):
         plt.ylabel('Unique Days', fontsize=12)     
         plt.tight_layout()
 
-        img = self._save_to_base64
+        img = self._save_to_base64()
         return img
