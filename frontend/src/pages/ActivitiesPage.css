@@ -1,0 +1,52 @@
+.charts-column {
+    padding: 20px;
+    width: 100%; /* Занимает всю доступную ширину родителя */
+    box-sizing: border-box; /* Убедимся, что padding не влияет на ширину */
+}
+  
+.content-wrapper {
+    max-width: 70%; /* Увеличим ширину, например, до 80% вместо 66.67% */
+    margin-right: auto; /* Прижимаем к левой стороне */
+    width: 100%; /* Позволяем растягиваться до max-width */
+    display: grid;
+    gap: 20px;
+}
+
+.big-block {
+    background-color: #e0f7fa;
+    padding: 40px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 8px;
+    min-height: 200px;
+}
+
+.medium-blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.medium-block {
+    background-color: #fff3e0;
+    padding: 30px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 8px;
+    min-height: 150px;
+}
+
+.small-blocks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.small-block {
+    background-color: #f1f8e9;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 8px;
+    min-height: 100px;
+}
