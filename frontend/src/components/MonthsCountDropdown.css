@@ -1,30 +1,55 @@
-.dropdown {
+.dropdown-container {
     position: relative;
-    width: 120px;
-    margin-right: 20px; 
-    margin-top: 20px;  
-    float: right;
-}
-
-.dropdown button {
-    width: 100%;
-    box-sizing: border-box; 
-}
-
-.dropdown-content {
+    display: inline-block;
+  }
+  
+  .dropdown-button {
+    width: 124px;
+    height: 49px;
+    background: #4A3AFF;
+    border-radius: 56px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    padding: 0 15px; /* Добавим отступы для текста */
+    text-align: center;
+  }
+  
+  .main-content {
+    position: relative; /* Убедимся, что контейнер является референсной точкой */
+    padding: 20px; /* Добавим отступы для контента */
+  }
+  
+  .dropdown-container {
     position: absolute;
-    left: 0;
-    top: 100%;
-    background-color: white;
-    width: 100%;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box; 
-    padding: 5px;
-}
-
-.dropdown-content button {
-    text-align: left;
-}
+    top: 20px; /* Отступ от верхнего края контейнера */
+    right: 20px; /* Отступ от правого края контейнера */
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%; /* Появляется сразу под кнопкой */
+    right: 0; /* Выравнивание по правому краю кнопки */
+    background-color: #ECF5FF;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-width: 124px;
+    display: none;
+    z-index: 1;
+  }
+  
+  .dropdown-container:hover .dropdown-menu {
+    display: block;
+  }
+  
+  .dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #d1e7ff;
+  }
