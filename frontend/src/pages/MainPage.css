@@ -1,0 +1,11 @@
+.main-content {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  position: relative; /* Для позиционирования дочерних элементов */
+  min-height: 100%; /* Убедимся, что контент занимает место */
+}
+
+.content-section {
+  margin-top: 40px; /* Отступ сверху, чтобы не пересекаться с MonthsCountDropdown */
+}
