@@ -17,14 +17,17 @@ async def plot_activity_time_by_month(
 ):
     df = await orch.get_dataframe()
     summary = await orch.get_summary()
-    chart = await orch.get_chart()
 
-    table = summary.get_activity_time_by_month(df, months_back)
-    img_base64 = chart.get_time_barchart(table)
+    df = summary.get_activity_time_by_month(df, months_back)
+    df_json = summary.get_json(df)
     
-    data_url = f"data:image/png;base64,{img_base64}"
+    response_data = {
+        'title': 'Total Time comparison by Activity Type',
+        'ylabel': 'Total Time (hours)',
+        'data': df_json
+    }
 
-    return JSONResponse(content={"image": data_url})
+    return JSONResponse(content=response_data)
 
 @router.get("/unique_days_by_month")
 async def plot_activity_unique_days_by_month(
