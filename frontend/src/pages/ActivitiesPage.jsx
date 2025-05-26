@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import './ActivitiesPage.css';
+import TimeBarChart from '../components/charts/BarChart';
 
 const fetchCharts = async (chartConfigs, selectedMonths, setError) => {
     try {
       const requests = chartConfigs.map(({ endpoint, setChart }) =>
         axios.get(`http://127.0.0.1:8000/${endpoint}?months_back=${selectedMonths}`).then(
           (response) => {
-            setChart(response.data.image);
+            setChart(response);
           }
         )
       );
@@ -46,7 +47,7 @@ export default function ActivitiesPage({ selectedMonths }) {
         <div className="content-wrapper">
             <div className="big-block">
                 {timeByActivity ? (
-                    <img src={timeByActivity} alt="Time by Activity" className="chart-image" />
+                    <TimeBarChart chartData={timeByActivity} />
                 ) : ('Загрузка...')}
             </div>
             <div className="medium-blocks">
