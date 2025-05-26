@@ -13,8 +13,9 @@
 }
 
 .big-block {
-    background-color: #e0f7fa;
-    padding: 40px;
+    box-shadow: 0px 2px 6px 0px rgba(13, 10, 44, 0.08);
+    background-color: #FFFFFF;
+    padding: 0px;
     text-align: center;
     font-size: 18px;
     border-radius: 8px;
@@ -28,8 +29,9 @@
 }
 
 .medium-block {
-    background-color: #fff3e0;
-    padding: 30px;
+    box-shadow: 0px 2px 6px 0px rgba(13, 10, 44, 0.08);
+    background-color: #FFFFFF;
+    padding: 0px;
     text-align: center;
     font-size: 16px;
     border-radius: 8px;
@@ -37,6 +39,8 @@
 }
 
 .small-blocks {
+    box-shadow: 0px 2px 6px 0px rgba(13, 10, 44, 0.08);
+    background-color: #FFFFFF;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
@@ -44,7 +48,7 @@
 
 .small-block {
     background-color: #f1f8e9;
-    padding: 20px;
+    padding: 0px;
     text-align: center;
     font-size: 14px;
     border-radius: 8px;

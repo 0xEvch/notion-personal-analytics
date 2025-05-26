@@ -4,6 +4,7 @@
   padding: 20px;
   position: relative; /* Для позиционирования дочерних элементов */
   min-height: 100%; /* Убедимся, что контент занимает место */
+  background-color: #F8F8FF;
 }
 
 .content-section {
