@@ -9,7 +9,7 @@ class Summary():
         ]
 
     def get_json(self, df: pd.DataFrame) -> str:
-        return df.to_json(orient="records", lines=True)
+        return df.to_json(orient="index")
     
     def _pivot_data(self, data, values, columns):
         return data.pivot_table(
