@@ -31,14 +31,35 @@ class BarChart extends Component {
   }
 
   extractActivitiesAndMonths(parsedData) {
-    if (!parsedData) return { activities: [], months: [] };
+    if (!parsedData) return { activities: [], months: [], isTotal: false };
+    
+    const keys = Object.keys(parsedData);
     // Извлекаем активности и месяцы
-    const activities = Object.keys(parsedData);
-    const months = activities.length > 0 ? Object.keys(parsedData[activities[0]]) : [];
-    return { activities, months };
+    if (keys.length > 0 && typeof parsedData[keys[0]] === 'object' && !Array.isArray(parsedData[keys[0]])) {
+      const activities = keys;
+      const months = Object.keys(parsedData[activities[0]] || {});
+      return { activities, months, isTotal: false };
+    } else {
+      // Второй JSON: месяцы как ключи, значения — числа
+      const months = keys;
+      const activities = ['Total']; // Одна "активность" для отображения
+      return { activities, months, isTotal: true };
+    }
   }
 
-  createPlotData(activities, months, parsedData) {  
+  createPlotData(activities, months, parsedData, isTotal) {  
+    if (isTotal) {
+      // Для второго JSON: одна трасса с месяцами на оси X и значениями на оси Y
+      return [{
+        x: months,
+        y: months.map(month => parsedData[month] || 0),
+        type: 'bar',
+        marker: {
+          color: this.pastelColors[0],
+          opacity: 0.8,
+        },
+      }];
+    }
   // Формируем данные для Plotly
     return months.map((month, index) => {
       const trace = {
@@ -51,16 +72,15 @@ class BarChart extends Component {
           opacity: 0.8,
         },
       };
-      console.log(`Trace for ${month}:`, trace);
       return trace;
     });
   }
 
-  createLayout(chartData) {
+  createLayout(chartData, isTotal) {
     // Настройки графика
     return {
       title: {
-        text: chartData.title || '',
+        text: chartData.data.title || '',
         font: { size: 12 },
         pad: { t: 15 },
       },
@@ -73,7 +93,7 @@ class BarChart extends Component {
       },
       yaxis: {
         title: {
-          text: chartData.ylabel || '',
+          text: chartData.data.ylabel || '',
           font: { size: 12 },
         },
         gridcolor: '#E5E5EF', // Сетка по Y
@@ -84,7 +104,7 @@ class BarChart extends Component {
       legend: {
         title: { text: 'Month', font: { size: 10 } },
       },
-      showlegend: true,
+      showlegend: !isTotal,
       plot_bgcolor: 'rgba(0,0,0,0)', // Прозрачный фон
       paper_bgcolor: 'rgba(0,0,0,0)', // Прозрачный фон бумаги
       margin: { t: 60, b: 60, l: 60, r: 40 }, // Компактные отступы
@@ -98,11 +118,12 @@ class BarChart extends Component {
     const parsedData = this.parseChartData(chartData);
     if (!parsedData) return;
 
-    const { activities, months } = this.extractActivitiesAndMonths(parsedData);
+    const { activities, months, isTotal } = this.extractActivitiesAndMonths(parsedData);
     if (!activities.length || !months.length) return;
+    console.log(chartData);
     
-    const plotData = this.createPlotData(activities, months, parsedData);
-    const layout = this.createLayout(chartData);
+    const plotData = this.createPlotData(activities, months, parsedData, isTotal);
+    const layout = this.createLayout(chartData, isTotal);
 
     Plotly.newPlot(this.chartRef.current, plotData, layout, { responsive: true });
   }
