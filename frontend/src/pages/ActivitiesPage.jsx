@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import './ActivitiesPage.css';
-import TimeBarChart from '../components/charts/BarChart';
+import BarChart from '../components/charts/BarChart';
 
 const fetchCharts = async (chartConfigs, selectedMonths, setError) => {
     try {
@@ -47,19 +47,19 @@ export default function ActivitiesPage({ selectedMonths }) {
         <div className="content-wrapper">
             <div className="big-block">
                 {timeByActivity ? (
-                    <TimeBarChart chartData={timeByActivity} />
-                ) : ('Загрузка...')}
+                    <BarChart chartData={timeByActivity} />
+                ) : ('Loading...')}
             </div>
             <div className="medium-blocks">
             <div className="medium-block">
                 {totalTime ? (
-                    <img src={totalTime} alt="Total Time" className="chart-image" />
-                ) : ('Загрузка...')}
+                    <BarChart chartData={totalTime} />
+                ) : ('Loading...')}
             </div>
             <div className="medium-block">
                 {totalUniqueDays ? (
-                    <img src={totalUniqueDays} alt="Total Unique Days" className="chart-image" />
-                ) : ('Загрузка...')}
+                    <BarChart chartData={totalUniqueDays} />
+                ) : ('Loading...')}
             </div>
             </div>
             <div className="small-blocks">test</div>
