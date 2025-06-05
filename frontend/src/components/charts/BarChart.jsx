@@ -1,57 +1,66 @@
+import React, { Component } from 'react';
 import Plotly from 'plotly.js-dist-min';
-import { useEffect, useRef } from 'react';
 
-const TimeBarChart = ({ chartData }) => {
-  const chartRef = useRef(null);
+class BarChart extends Component {
+  constructor(props) {
+    super(props);
+    this.chartRef = React.createRef();
+    this.pastelColors = [
+      '#AEC6CF', '#FFB7B2', '#B2DFDB', '#F0B7DA', '#C1E1C1',
+    ];
+  }
 
-  const pastelColors = [
-    '#AEC6CF', '#FFB7B2', '#B2DFDB', '#F0B7DA', '#C1E1C1',
-  ];
+  parseChartData(chartData) {
+    if (!chartData || !this.chartRef.current) return;
 
-  useEffect(() => {
-    if (!chartData || !chartRef.current) return;
-
-    console.log('chartData:', chartData);
-
-    // Проверяем структуру chartData и извлекаем данные
-    let parsedData;
     try {
       // Если chartData.data — строка, парсим её
       const dataToParse = chartData.data || chartData;
-      parsedData = typeof dataToParse === 'string' ? JSON.parse(dataToParse) : dataToParse;
+      let parsedData = typeof dataToParse === 'string' ? JSON.parse(dataToParse) : dataToParse;
 
       // Если chartData.data уже объект
       if (parsedData.data) {
         parsedData = typeof parsedData.data === 'string' ? JSON.parse(parsedData.data) : parsedData.data;
       }
+
+      return parsedData;
     } catch (err) {
+      console.error('Error parsing chartData:', err);
       return;
     }
+  }
 
+  extractActivitiesAndMonths(parsedData) {
+    if (!parsedData) return { activities: [], months: [] };
     // Извлекаем активности и месяцы
     const activities = Object.keys(parsedData);
-    const months = Object.keys(parsedData[activities[0]]); // Берем месяцы из первой активности
+    const months = activities.length > 0 ? Object.keys(parsedData[activities[0]]) : [];
+    return { activities, months };
+  }
 
-    // Формируем данные для Plotly
-    const plotData = months.map((month, index) => {
+  createPlotData(activities, months, parsedData) {  
+  // Формируем данные для Plotly
+    return months.map((month, index) => {
       const trace = {
         x: activities, // Активности на оси X
         y: activities.map((activity) => parsedData[activity][month] || 0), // Значения для месяца
         type: 'bar',
         name: month, // Название месяца для легенды
         marker: {
-          color: pastelColors[index % pastelColors.length], // Пастельные цвета
+          color: this.pastelColors[index % this.pastelColors.length], // Пастельные цвета
           opacity: 0.8,
         },
       };
       console.log(`Trace for ${month}:`, trace);
       return trace;
     });
+  }
 
+  createLayout(chartData) {
     // Настройки графика
-    const layout = {
+    return {
       title: {
-        text: chartData.title || 'Total Time comparison by Activity Type',
+        text: chartData.title || '',
         font: { size: 12 },
         pad: { t: 15 },
       },
@@ -64,7 +73,7 @@ const TimeBarChart = ({ chartData }) => {
       },
       yaxis: {
         title: {
-          text: chartData.ylabel || 'Total Time (hours)',
+          text: chartData.ylabel || '',
           font: { size: 12 },
         },
         gridcolor: '#E5E5EF', // Сетка по Y
@@ -80,20 +89,48 @@ const TimeBarChart = ({ chartData }) => {
       paper_bgcolor: 'rgba(0,0,0,0)', // Прозрачный фон бумаги
       margin: { t: 60, b: 60, l: 60, r: 40 }, // Компактные отступы
     };
+  }
 
-    console.log('plotData:', plotData);
-    console.log('layout:', layout);
+  renderChart() {
+    const { chartData } = this.props;
+    if (!chartData || !this.chartRef.current) return;
 
-    Plotly.newPlot(chartRef.current, plotData, layout, { responsive: true });
+    const parsedData = this.parseChartData(chartData);
+    if (!parsedData) return;
 
-    return () => {
-      if (chartRef.current) {
-        Plotly.purge(chartRef.current); // Очистка при размонтировании
-      }
-    };
-  }, [chartData]);
+    const { activities, months } = this.extractActivitiesAndMonths(parsedData);
+    if (!activities.length || !months.length) return;
+    
+    const plotData = this.createPlotData(activities, months, parsedData);
+    const layout = this.createLayout(chartData);
 
-  return <div ref={chartRef} style={{ width: '100%', height: '500px' }} />;
+    Plotly.newPlot(this.chartRef.current, plotData, layout, { responsive: true });
+  }
+
+  cleanupChart() {
+    if (this.chartRef.current) {
+      Plotly.purge(this.chartRef.current);
+    }
+  }
+
+  componentDidMount() {
+    this.renderChart();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.chartData !== this.props.chartData) {
+      this.cleanupChart();
+      this.renderChart();
+    }
+  }
+
+  componentWillUnmount() {
+    this.cleanupChart();
+  }
+
+  render() {
+    return <div ref={this.chartRef} style={{ width: '100%', height: '500px' }} />;
+  }
 };
 
-export default TimeBarChart;
+export default BarChart;
