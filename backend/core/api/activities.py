@@ -85,3 +85,29 @@ async def total_unique_days_by_month(
     }
 
     return JSONResponse(content=response_data)
+
+@router.get("/top_three")
+async def top_three_activities_by_month(
+    months_back: int, 
+    orch: Orchestrator = Depends(get_orchestrator)
+):
+    df_raw = await orch.get_dataframe()
+    summary = await orch.get_summary()
+
+    df = summary.get_top_three_activities_by_month(df_raw, months_back)
+    response_data = summary.get_json(df)
+
+    return JSONResponse(content=response_data)
+
+@router.get("/average_time_per_day")
+async def average_time_per_day(
+    months_back: int, 
+    orch: Orchestrator = Depends(get_orchestrator)
+):
+    df_raw = await orch.get_dataframe()
+    summary = await orch.get_summary()
+
+    df = summary.get_average_time_per_day(df_raw, months_back)
+    response_data = summary.get_json(df)
+
+    return JSONResponse(content=response_data)
