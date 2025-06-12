@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Plotly from 'plotly.js-dist-min';
+import { parseData, extractActivitiesAndMonths } from '../ParseData';
 
 class BarChart extends Component {
   constructor(props) {
@@ -8,43 +9,6 @@ class BarChart extends Component {
     this.pastelColors = [
       '#AEC6CF', '#FFB7B2', '#B2DFDB', '#F0B7DA', '#C1E1C1',
     ];
-  }
-
-  parseChartData(chartData) {
-    if (!chartData || !this.chartRef.current) return;
-
-    try {
-      // Если chartData.data — строка, парсим её
-      const dataToParse = chartData.data || chartData;
-      let parsedData = typeof dataToParse === 'string' ? JSON.parse(dataToParse) : dataToParse;
-
-      // Если chartData.data уже объект
-      if (parsedData.data) {
-        parsedData = typeof parsedData.data === 'string' ? JSON.parse(parsedData.data) : parsedData.data;
-      }
-
-      return parsedData;
-    } catch (err) {
-      console.error('Error parsing chartData:', err);
-      return;
-    }
-  }
-
-  extractActivitiesAndMonths(parsedData) {
-    if (!parsedData) return { activities: [], months: [], isTotal: false };
-    
-    const keys = Object.keys(parsedData);
-    // Извлекаем активности и месяцы
-    if (keys.length > 0 && typeof parsedData[keys[0]] === 'object' && !Array.isArray(parsedData[keys[0]])) {
-      const activities = keys;
-      const months = Object.keys(parsedData[activities[0]] || {});
-      return { activities, months, isTotal: false };
-    } else {
-      // Второй JSON: месяцы как ключи, значения — числа
-      const months = keys;
-      const activities = ['Total']; // Одна "активность" для отображения
-      return { activities, months, isTotal: true };
-    }
   }
 
   createPlotData(activities, months, parsedData, isTotal) {  
@@ -115,12 +79,11 @@ class BarChart extends Component {
     const { chartData } = this.props;
     if (!chartData || !this.chartRef.current) return;
 
-    const parsedData = this.parseChartData(chartData);
+    const parsedData = parseData(chartData);
     if (!parsedData) return;
 
-    const { activities, months, isTotal } = this.extractActivitiesAndMonths(parsedData);
+    const { activities, months, isTotal } = extractActivitiesAndMonths(parsedData);
     if (!activities.length || !months.length) return;
-    console.log(chartData);
     
     const plotData = this.createPlotData(activities, months, parsedData, isTotal);
     const layout = this.createLayout(chartData, isTotal);
