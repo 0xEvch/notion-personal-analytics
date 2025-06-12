@@ -1,11 +1,11 @@
 .charts-column {
-    padding: 20px;
-    width: 100%; /* Занимает всю доступную ширину родителя */
+    display: grid;
+    grid-template-columns: 70% 30%; /* или по другим пропорциям */
+    gap: 20px; /* между колонками */
     box-sizing: border-box; /* Убедимся, что padding не влияет на ширину */
 }
-  
+
 .content-wrapper {
-    max-width: 70%; /* Увеличим ширину, например, до 80% вместо 66.67% */
     margin-right: auto; /* Прижимаем к левой стороне */
     width: 100%; /* Позволяем растягиваться до max-width */
     display: grid;
