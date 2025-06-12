@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import './ActivitiesPage.css';
 import BarChart from '../components/charts/BarChart';
+import Table from '../components/views/TableView';
+import TopThreeActicities from '../components/views/TopThreeActicities'
 
 const fetchCharts = async (chartConfigs, selectedMonths, setError) => {
     try {
@@ -25,6 +27,8 @@ export default function ActivitiesPage({ selectedMonths }) {
     const [uniqueDaysByActivity, setUniqueDaysByActivity] = useState(null);
     const [totalTime, setTotalTime] = useState(null);
     const [totalUniqueDays, setTotalUniqueDays] = useState(null);
+    const [topThree, setTopThree] = useState (null);
+    const [avgTimePerDay, setAvgTimePerDay] = useState(null)
     const [error, setError] = useState(null);
 
     const chartConfigs = React.useMemo(() => [
@@ -32,6 +36,8 @@ export default function ActivitiesPage({ selectedMonths }) {
         { endpoint: 'activities/unique_days_by_month', setChart: setUniqueDaysByActivity },
         { endpoint: 'activities/total_time_by_month', setChart: setTotalTime },
         { endpoint: 'activities/total_unique_days_by_month', setChart: setTotalUniqueDays },
+        { endpoint: 'activities/top_three', setChart: setTopThree },
+        { endpoint: 'activities/average_time_per_day', setChart: setAvgTimePerDay },
     ], []);
 
     useEffect(() => {
@@ -62,7 +68,25 @@ export default function ActivitiesPage({ selectedMonths }) {
                 ) : ('Loading...')}
             </div>
             </div>
-            <div className="small-blocks">test</div>
+            <div className="small-blocks">
+            <div className="small-block">
+                {topThree ? (
+                    <Table data={topThree} />
+                ) : ('Loading...')}
+            </div>  
+            <div className="small-block">
+                {avgTimePerDay ? (
+                    <Table data={avgTimePerDay} />
+                ) : ('Loading...')}
+            </div>  
+            </div>
+        </div>
+        <div className="right-column">
+            <div>
+                {topThree ? (
+                    <TopThreeActicities data={topThree} />
+                ) : ('Loading...')}
+            </div>
         </div>
         </div>
     );
