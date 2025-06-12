@@ -25,7 +25,8 @@ class ActivitySummary(Summary):
         total = result.groupby('Month').apply(
             lambda df: df.sort_values(by='Total Time (min)', ascending=False).head(3)
             )
-        return total.sort_values(by='Order',  ascending=False)
+        sorted = total.sort_values(by='Order',  ascending=False)
+        return sorted[['Total Time (min)', 'Total Time']]
 
     def get_average_time_per_day(self, data, months_back):  
         summary = self._collect_monthly_summaries(data, months_back, 'date')
