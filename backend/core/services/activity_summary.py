@@ -32,7 +32,8 @@ class ActivitySummary(Summary):
         result = summary.groupby('Month').apply(
             lambda df: (df.sum() / df.count()).round(1)
             )
-        return result.sort_values(by='Order')
+        sorted = result.sort_values(by='Order')
+        return sorted[['Total Time (min)', 'Total Time']]
     
     def _aggregate_metrics_by_month(self, data, months_back, column_to_sum):
         data = self._collect_monthly_summaries(data, months_back, "date")
