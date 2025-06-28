@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+/* Для h1 - заголовка месяцев */
+h1 {
+    font-family: 'DM Sans'; /* красивый и структурированный шрифт */
+    font-size: 1.2em; /* увеличенный размер текста */
+    color: #2c3e50; /* тёмный цвет номера месяца */
+    margin-top: 20px; /* отступ сверху */
+    margin-bottom: 10px; /* отступ снизу */
+    text-align: center; /* по центру */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* немного тени для объема */
+    font-weight: bold;
+  }
+  
+  /* Для h2 - проектов под месяцем */
+  h2 {
+    font-family: 'DM Sans';
+    font-size: 1em; /* чуть меньше чем h1, но заметно */
+    color: #34495e; /* более светлый цвет */
+    margin-left: 20px; /* отступ слева для выравнивания */
+    margin-bottom: 8px; /* небольшой отступ снизу */
+    background-color: #ecf0f1; /* легкий фон для выделения */
+    padding: 4px 8px; /* внутренние отступы */
+    border-radius: 4px; /* скругление углов */
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1); /* тень вокруг */
+    font-weight: normal;
+  }
+  
