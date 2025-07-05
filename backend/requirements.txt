@@ -1,1 +1,7 @@
-notion-client=2.3.0
+notion-client==2.3.0
+fastapi
+uvicorn
+matplotlib
+seaborn
+pandas
+python-dotenv

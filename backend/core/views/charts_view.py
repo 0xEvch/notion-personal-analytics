@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import seaborn as sns  
-import mplcursors
-import base64
-import io
+# import mplcursors
+# import base64
+# import io
 
 class BaseChartView:
     def __init__(self):

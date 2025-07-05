@@ -1,6 +1,6 @@
-from data.notion.notion_loader import NotionLoader
+from data.notion_loader import NotionLoader
 from core.utils.base_json_parser import JsonParser
-from data.notion.cache import Cache
+from data.cache import Cache
 
 class SyncManager:
     def __init__(self, loader: NotionLoader, parser: JsonParser, cache: Cache):
