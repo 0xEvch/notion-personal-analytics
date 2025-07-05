@@ -28,8 +28,12 @@ class Summary():
 
         return data
     
-    def _get_month_by_offset(self, offset: int):
-        month = datetime.now().month - offset
+    def _get_month_by_offset(self, offset: int, include_this_month: bool):
+        if include_this_month:
+            month = datetime.now().month - offset
+        else:
+            month = datetime.now().month - offset - 1
+        
         year = datetime.now().year
         if month <= 0:
             month += 12
