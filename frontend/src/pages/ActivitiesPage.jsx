@@ -5,10 +5,10 @@ import BarChart from '../components/charts/BarChart';
 import Table from '../components/views/TableView';
 import TopThreeActicities from '../components/views/TopThreeActicities'
 
-const fetchCharts = async (chartConfigs, selectedMonths, setError) => {
+const fetchCharts = async (chartConfigs, selectedMonths, includeThisMonth, setError) => {
     try {
       const requests = chartConfigs.map(({ endpoint, setChart }) =>
-        axios.get(`http://127.0.0.1:8000/${endpoint}?months_back=${selectedMonths}`).then(
+        axios.get(`http://127.0.0.1:8000/${endpoint}?months_back=${selectedMonths}&include_this_month=${includeThisMonth}`).then(
           (response) => {
             setChart(response);
           }
@@ -22,7 +22,7 @@ const fetchCharts = async (chartConfigs, selectedMonths, setError) => {
     }
 };
 
-export default function ActivitiesPage({ selectedMonths }) {
+export default function ActivitiesPage({ selectedMonths, includeThisMonth }) {
     const [timeByActivity, setTimeByActivity] = useState(null);
     const [uniqueDaysByActivity, setUniqueDaysByActivity] = useState(null);
     const [totalTime, setTotalTime] = useState(null);
@@ -41,8 +41,8 @@ export default function ActivitiesPage({ selectedMonths }) {
     ], []);
 
     useEffect(() => {
-        fetchCharts(chartConfigs, selectedMonths, setError);
-    }, [selectedMonths]);
+        fetchCharts(chartConfigs, selectedMonths, includeThisMonth, setError);
+    }, [selectedMonths, includeThisMonth]);
     
     if (error) {
         return <div>{error}</div>;

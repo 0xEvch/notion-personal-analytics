@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+.toggle-wrapper {
+    font-family: 'DM Sans';
+    display: flex;
+    align-items: center; /* Выравнивание по центру по вертикали */
+    gap: 10px; /* Зазор между текстом и переключателем */
+    position: absolute; /* Сохранить абсолютное позиционирование */
+    top: 26px; /* Как раньше */
+    right: 160px; /* Как раньше, можно скорректировать */
+}
+
+.toggle-label {
+    font-size: 16px; /* Можно настроить размер шрифта */
+    color: #333; /* Цвет текста, аналогично другим элементам */
+}
+
+.toggle-switch {
+    width: 80px; 
+    height: 40px; 
+    background-color: #ecf0f1;
+    border-radius: 20px; /* Сделать более округлым, но не обязательно 56px, так как уменьшили размер */
+    border: none;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1); /* тень вокруг */
+}
+
+.toggle-switch.active {
+    background-color: #4A3AFF;
+}
+
+.toggle-knob {
+    width: 36px; /* Уменьшено */
+    height: 36px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    display: flex; /* Добавить для центрирования содержимого */
+    justify-content: center;
+    align-items: center; /* Центрировать текст */
+    font-size: 14px; /* Установить размер шрифта для текста внутри */
+    color: #4A3AFF; /* Цвет текста, можно изменить */
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+}
+
+.toggle-switch.active .toggle-knob {
+    transform: translateX(40px); /* Скорректировано для новой ширины: (80 - 36 - 4)/2 или просто рассчитать для движения к правому краю */
+    /* Расчёт: ширина switch 80px, knob 36px, отступ 2px, так что max translateX = 80 - 36 - 2 - 2 = 40px? Подождите, better: от left:2px к left:42px, так что translateX(40px) если initial left:2px. */
+}
