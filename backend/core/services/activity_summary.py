@@ -35,6 +35,16 @@ class ActivitySummary(Summary):
             )
         sorted = result.sort_values(by='Order')
         return sorted[['Total Time (min)', 'Total Time']]
+
+    def get_most_active_month(self, data):
+        summary = self._collect_monthly_summaries(data, 12, False, 'activity_type')
+        result = self._get_correct_month_order(summary)
+        theMostActiveMonth = result.groupby('Month').agg({
+            'Month': 'first',
+            'Total Time (min)': 'sum',
+            'Unique Days' :'sum'
+        }).max()
+        return theMostActiveMonth
     
     def _aggregate_metrics_by_month(self, data, months_back, include_this_month, column_to_sum):
         data = self._collect_monthly_summaries(data, months_back, include_this_month, "date")

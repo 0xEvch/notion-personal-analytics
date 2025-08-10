@@ -117,3 +117,15 @@ async def average_time_per_day(
     response_data = summary.get_json(df)
 
     return JSONResponse(content=response_data)
+
+@router.get("/the_most_active_month")
+async def the_most_active_month(
+    orch: Orchestrator = Depends(get_orchestrator)
+):
+    df_raw = await orch.get_dataframe()
+    summary = await orch.get_summary()
+
+    df = summary.get_most_active_month(df_raw)
+    response_data = summary.get_json(df)
+
+    return JSONResponse(content=response_data)
