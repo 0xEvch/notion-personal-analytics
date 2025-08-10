@@ -42,6 +42,7 @@ class ActivitySummary(Summary):
         theMostActiveMonth = result.groupby('Month').agg({
             'Month': 'first',
             'Total Time (min)': 'sum',
+            'Total Time': 'sum',
             'Unique Days' :'sum'
         }).max()
         return theMostActiveMonth
