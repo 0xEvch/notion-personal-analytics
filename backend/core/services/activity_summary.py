@@ -20,13 +20,21 @@ class ActivitySummary(Summary):
         result = self._aggregate_metrics_by_month(data, months_back, include_this_month, 'Unique Days')
         return result['Unique Days']
     
-    def get_top_three_activities_by_month(self, data, months_back, include_this_month):
-        result = self._collect_monthly_summaries(data, months_back, include_this_month, "activity_type")
-        total = result.groupby('Month').apply(
+    def get_top_three_categories_by_month(self, data, months_back, include_this_month):
+        categories = self._collect_monthly_summaries(data, months_back, include_this_month, "activity_type")
+        categories_total = categories.groupby('Month').apply(
             lambda df: df.sort_values(by='Total Time (min)', ascending=False).head(3)
-            )
-        sorted = total.sort_values(by='Order',  ascending=False)
-        return sorted[['Total Time (min)', 'Total Time']]
+        )
+        categories_sorted = categories_total.sort_values(by='Order',  ascending=False)
+        return categories_sorted[['Total Time (min)', 'Total Time']]
+
+    def get_top_three_activities_by_month(self, data, months_back, include_this_month):
+        activities = self._collect_monthly_summaries(data, months_back, include_this_month, "name")
+        activities_total = activities.groupby('Month').apply(
+            lambda df: df.sort_values(by='Total Time (min)', ascending=False).head(3)
+        )
+        activities_sorted = activities_total.sort_values(by='Order',  ascending=False)
+        return activities_sorted[['Total Time (min)', 'Total Time']]
 
     def get_average_time_per_day(self, data, months_back, include_this_month):  
         summary = self._collect_monthly_summaries(data, months_back, include_this_month, 'date')
