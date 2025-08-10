@@ -28,7 +28,8 @@ export default function ActivitiesPage({ selectedMonths, includeThisMonth }) {
     const [uniqueDaysByActivity, setUniqueDaysByActivity] = useState(null);
     const [totalTime, setTotalTime] = useState(null);
     const [totalUniqueDays, setTotalUniqueDays] = useState(null);
-    const [topThree, setTopThree] = useState (null);
+    const [topThreeCategory, setTopThreeCategory] = useState (null);
+    const [topThreeActivity, setTopThreeActivity] = useState (null);
     const [avgTimePerDay, setAvgTimePerDay] = useState(null);
     const [mostActiveMonth, setMostActiveMonth] = useState(null);
     const [error, setError] = useState(null);
@@ -38,7 +39,8 @@ export default function ActivitiesPage({ selectedMonths, includeThisMonth }) {
         { endpoint: 'activities/unique_days_by_month', setChart: setUniqueDaysByActivity },
         { endpoint: 'activities/total_time_by_month', setChart: setTotalTime },
         { endpoint: 'activities/total_unique_days_by_month', setChart: setTotalUniqueDays },
-        { endpoint: 'activities/top_three', setChart: setTopThree },
+        { endpoint: 'activities/top_three_categories', setChart: setTopThreeCategory },
+        { endpoint: 'activities/top_three_activities', setChart: setTopThreeActivity },
         { endpoint: 'activities/average_time_per_day', setChart: setAvgTimePerDay },
         { endpoint: 'activities/the_most_active_month', setChart: setMostActiveMonth },
     ], []);
@@ -73,9 +75,7 @@ export default function ActivitiesPage({ selectedMonths, includeThisMonth }) {
             </div>
             <div className="small-blocks">
             <div className="small-block">
-                {topThree ? (
-                    <Table data={topThree} />
-                ) : ('Loading...')}
+                test
             </div>  
             <div className="small-block">
                 {avgTimePerDay ? (
@@ -91,8 +91,10 @@ export default function ActivitiesPage({ selectedMonths, includeThisMonth }) {
                 ) : ('Loading...')}
             </div>
             <div>
-                {topThree ? (
-                    <TopThreeActicities data={topThree} />
+                {topThreeActivity && topThreeCategory ? (
+                    <TopThreeActicities
+                        activities = {topThreeActivity} 
+                        category = {topThreeCategory} />
                 ) : ('Loading...')}
             </div>
         </div>
