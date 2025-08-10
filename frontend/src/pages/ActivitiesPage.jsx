@@ -4,6 +4,7 @@ import './ActivitiesPage.css';
 import BarChart from '../components/charts/BarChart';
 import Table from '../components/views/TableView';
 import TopThreeActicities from '../components/views/TopThreeActicities'
+import TheMostActiveMonth from '../components/views/TheMostActiveMonth'
 
 const fetchCharts = async (chartConfigs, selectedMonths, includeThisMonth, setError) => {
     try {
@@ -28,7 +29,8 @@ export default function ActivitiesPage({ selectedMonths, includeThisMonth }) {
     const [totalTime, setTotalTime] = useState(null);
     const [totalUniqueDays, setTotalUniqueDays] = useState(null);
     const [topThree, setTopThree] = useState (null);
-    const [avgTimePerDay, setAvgTimePerDay] = useState(null)
+    const [avgTimePerDay, setAvgTimePerDay] = useState(null);
+    const [mostActiveMonth, setMostActiveMonth] = useState(null);
     const [error, setError] = useState(null);
 
     const chartConfigs = React.useMemo(() => [
@@ -38,6 +40,7 @@ export default function ActivitiesPage({ selectedMonths, includeThisMonth }) {
         { endpoint: 'activities/total_unique_days_by_month', setChart: setTotalUniqueDays },
         { endpoint: 'activities/top_three', setChart: setTopThree },
         { endpoint: 'activities/average_time_per_day', setChart: setAvgTimePerDay },
+        { endpoint: 'activities/the_most_active_month', setChart: setMostActiveMonth },
     ], []);
 
     useEffect(() => {
@@ -82,6 +85,11 @@ export default function ActivitiesPage({ selectedMonths, includeThisMonth }) {
             </div>
         </div>
         <div className="right-column">
+            <div>
+                {mostActiveMonth ? (
+                    <TheMostActiveMonth data={mostActiveMonth} />
+                ) : ('Loading...')}
+            </div>
             <div>
                 {topThree ? (
                     <TopThreeActicities data={topThree} />
