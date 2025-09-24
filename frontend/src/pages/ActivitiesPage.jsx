@@ -5,6 +5,7 @@ import BarChart from '../components/charts/BarChart';
 import Table from '../components/views/TableView';
 import TopThreeActicities from '../components/views/TopThreeActicities'
 import TheMostActiveMonth from '../components/views/TheMostActiveMonth'
+import TimeOrUnicDaysButton from '../components/TimeOrUnicDaysButton'
 
 const fetchCharts = async (chartConfigs, selectedMonths, includeThisMonth, setError) => {
     try {
@@ -25,6 +26,7 @@ const fetchCharts = async (chartConfigs, selectedMonths, includeThisMonth, setEr
 
 export default function ActivitiesPage({ selectedMonths, includeThisMonth }) {
     const [timeByActivity, setTimeByActivity] = useState(null);
+    const [timeOrUnicDays, setTimeOrUnicDays] = useState(false);
     const [uniqueDaysByActivity, setUniqueDaysByActivity] = useState(null);
     const [totalTime, setTotalTime] = useState(null);
     const [totalUniqueDays, setTotalUniqueDays] = useState(null);
@@ -57,9 +59,20 @@ export default function ActivitiesPage({ selectedMonths, includeThisMonth }) {
         <div className="charts-column">
         <div className="content-wrapper">
             <div className="big-block">
-                {timeByActivity ? (
-                    <BarChart chartData={timeByActivity} />
-                ) : ('Loading...')}
+                <TimeOrUnicDaysButton 
+                    timeOrUnicDays = {timeOrUnicDays}
+                    setTimeOrUnicDays = {setTimeOrUnicDays}
+                />
+                {!timeOrUnicDays ? ( 
+                    timeByActivity ? (
+                        <BarChart chartData={timeByActivity} />
+                    ) : ('Loading...')
+                ) : (
+                    uniqueDaysByActivity ? (
+                        <BarChart chartData={uniqueDaysByActivity} />
+                    ) : ('Loading...')
+                )}
+                
             </div>
             <div className="medium-blocks">
             <div className="medium-block">
