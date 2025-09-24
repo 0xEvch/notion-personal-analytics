@@ -4,7 +4,7 @@
 h1 {
   font-family: 'DM Sans'; /* красивый и структурированный шрифт */
   font-size: 1.2em; /* увеличенный размер текста */
-  color: #4a3d97; /* тёмный цвет номера месяца */
+  color: #777199; /* тёмный цвет номера месяца */
   margin-top: 10px; /* отступ сверху */
   margin-bottom: 0px; /* отступ снизу */
   text-align: center; /* по центру */
@@ -16,10 +16,10 @@ h1 {
 h2 {
   font-family: 'DM Sans';
   font-size: 1em;
-  color: #4a3d97;
+  color: #61579b;
   margin-bottom: 3px; 
   background-color: #F8F7FF;
-  border: 1px solid #7D67FF;
+  border: 1px solid #bbafff;
   padding: 4px 8px;
   border-radius: 4px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
@@ -39,7 +39,7 @@ h2 {
 .column h3 {
   font-family: 'DM Sans';
   font-size: 1em;
-  color: #4a3d97;
+  color: #61579b;
   margin-bottom: 10px;
   font-weight: bold;
 }

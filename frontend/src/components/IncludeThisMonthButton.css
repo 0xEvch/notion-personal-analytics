@@ -29,7 +29,7 @@
 }
 
 .toggle-switch.active {
-    background-color: #4A3AFF;
+    background-color: #665499;
 }
 
 .toggle-knob {
@@ -44,7 +44,7 @@
     justify-content: center;
     align-items: center; /* Центрировать текст */
     font-size: 14px; /* Установить размер шрифта для текста внутри */
-    color: #4A3AFF; /* Цвет текста, можно изменить */
+    color: #665499; /* Цвет текста, можно изменить */
     transition: transform 0.3s ease;
     transform: translateX(0);
 }
